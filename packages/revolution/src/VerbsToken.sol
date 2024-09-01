@@ -278,6 +278,7 @@ contract VerbsToken is
     /**
      * @notice Mint a Verb with `verbId` to the provided `to` address. Pulls the top voted art piece from the CultureIndex.
      */
+    // @note revisit mintTo
     function _mintTo(address to) internal returns (uint256) {
         ICultureIndex.ArtPiece memory artPiece = cultureIndex.getTopVotedPiece();
 

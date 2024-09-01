@@ -168,6 +168,7 @@ contract AuctionHouse is
      * @param verbId The ID of the Verb to bid on.
      * @param bidder The address of the bidder.
      */
+    // @audit-ok createBid
     function createBid(uint256 verbId, address bidder) external payable override nonReentrant {
         IAuctionHouse.Auction memory _auction = auction;
 
@@ -333,6 +334,7 @@ contract AuctionHouse is
      * @notice Settle an auction, finalizing the bid and paying out to the owner. Pays out to the creator and the owner based on the creatorRateBps and entropyRateBps.
      * @dev If there are no bids, the Verb is burned.
      */
+    // @note revisit settleAuction
     function _settleAuction() internal {
         IAuctionHouse.Auction memory _auction = auction;
 

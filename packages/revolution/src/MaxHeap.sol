@@ -11,29 +11,19 @@ import { VersionedContract } from "./version/VersionedContract.sol";
 /// @title MaxHeap implementation in Solidity
 /// @dev This contract implements a Max Heap data structure with basic operations
 /// @author Written by rocketman and gpt4
+// @audit too many parent contract here, might check implications
 contract MaxHeap is VersionedContract, UUPS, Ownable2StepUpgradeable, ReentrancyGuardUpgradeable {
     /// @notice The parent contract that is allowed to update the data store
     address public admin;
 
-    ///                                                          ///
-    ///                         IMMUTABLES                       ///
-    ///                                                          ///
-
     /// @notice The contract upgrade manager
     IRevolutionBuilder private immutable manager;
 
-    ///                                                          ///
-    ///                         CONSTRUCTOR                      ///
-    ///                                                          ///
 
     /// @param _manager The contract upgrade manager address
     constructor(address _manager) payable initializer {
         manager = IRevolutionBuilder(_manager);
     }
-
-    ///                                                          ///
-    ///                          MODIFIERS                       ///
-    ///                                                          ///
 
     /**
      * @notice Require that the minter has not been locked.
@@ -43,15 +33,6 @@ contract MaxHeap is VersionedContract, UUPS, Ownable2StepUpgradeable, Reentrancy
         _;
     }
 
-    ///                                                          ///
-    ///                         INITIALIZER                      ///
-    ///                                                          ///
-
-    /**
-     * @notice Initializes the maxheap contract
-     * @param _initialOwner The initial owner of the contract
-     * @param _admin The contract that is allowed to update the data store
-     */
     function initialize(address _initialOwner, address _admin) public initializer {
         require(msg.sender == address(manager), "Only manager can initialize");
 

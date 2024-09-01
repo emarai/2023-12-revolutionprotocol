@@ -176,6 +176,7 @@ contract CultureIndex is
      * - The `creatorArray` must not contain any zero addresses.
      * - The function will return the length of the `creatorArray`.
      */
+    // @audit creator could be duplicate
     function validateCreatorsArray(CreatorBps[] calldata creatorArray) internal pure returns (uint256) {
         uint256 creatorArrayLength = creatorArray.length;
         //Require that creatorArray is not more than MAX_NUM_CREATORS to prevent gas limit issues
@@ -218,11 +219,13 @@ contract CultureIndex is
         uint256 pieceId = _currentPieceId++;
 
         /// @dev Insert the new piece into the max heap
+        // @note what maxHeap for? -> <pieceId, totalWeight>
         maxHeap.insert(pieceId, 0);
 
         ArtPiece storage newPiece = pieces[pieceId];
 
         newPiece.pieceId = pieceId;
+        // @note learn about vote weight
         newPiece.totalVotesSupply = _calculateVoteWeight(
             erc20VotingToken.totalSupply(),
             erc721VotingToken.totalSupply()
@@ -253,6 +256,7 @@ contract CultureIndex is
      * @param voter The address of the voter.
      * @return A boolean indicating if the voter has voted for the art piece.
      */
+    // @note I don't understand why it needs voterAddress???
     function hasVoted(uint256 pieceId, address voter) external view returns (bool) {
         return votes[pieceId][voter].voterAddress != address(0);
     }

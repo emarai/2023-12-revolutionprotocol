@@ -149,6 +149,7 @@ contract ERC20TokenEmitter is
      * @param protocolRewardsRecipients The addresses to pay the builder, purchaseRefferal, and deployer rewards to
      * @return tokensSoldWad The amount of tokens sold in wad units.
      */
+    // @note revisit buyToken
     function buyToken(
         address[] calldata addresses,
         uint[] calldata basisPointSplits,
